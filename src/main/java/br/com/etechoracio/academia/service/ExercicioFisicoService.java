@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,11 @@ public class ExercicioFisicoService {
     public List<ExercicioFisicoResponseDTO> buscarTodosAprovados() {
         List<ExercicioFisico> exerciciosFisicos = repository.findByAprovadoTrue();
         return mapper.toResponseDTOList(exerciciosFisicos);
+    }
+
+    public Optional<ExercicioFisicoResponseDTO> buscarAprovadoPorId(Long id) {
+        Optional<ExercicioFisico> exercicioFisico = repository.findByIdAndAprovadoTrue(id);
+        return exercicioFisico.map(mapper::toResponseDTO);
     }
 
 }
